@@ -1,0 +1,24 @@
+.required-input {
+    color: red;
+    display: inline
+}
+
+#radio-inline {
+    display:inline;
+    }
+
+p-dropdown {
+    font-size: 14px;
+}
+
+input[type=checkbox] {
+    zoom: 1.5;
+}
+
+p-radioButton {
+    font-size: 14px;
+}
+
+input {
+    font-size: 14px;
+}

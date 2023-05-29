@@ -1,0 +1,37 @@
+<div class="container">
+
+  <h3>{{ contact.name }}</h3>
+
+  <dl class="list">
+    <dt>Address</dt>
+    <dd>{{ contact.address }}</dd>
+    <dt>City</dt>
+    <dd>{{ contact.city }}</dd>
+    <dt>Telephone</dt>
+    <dd>{{ contact.phone }}</dd>
+    <dt>Email</dt>
+    <dd>{{ contact.email }}</dd>
+    <dt>Sexe</dt>
+    <dd *ngIf="!male">Femme</dd>
+    <dd *ngIf="male">Homme</dd>
+    <dt>Status</dt>
+    <dd *ngIf="disabled" style="color:red">Non Actif</dd>
+    <dd *ngIf="!disabled" style="color:green">Actif</dd>
+  </dl>
+
+  <div class="row">
+    <div class="col-md-12">
+      <a [routerLink]="['/contact-edit', contact.id]" class="btn btn-success">Edit</a>
+      <a [routerLink]="['/contact']" class="btn btn-warning">Back</a>
+      <button class="btn btn-danger" type="button" (click)="deleteContact(contact.id)">Delete</button>
+    </div>
+  </div>
+
+  <div>
+    <dl>
+      <dt class="subnote">ID: {{ contact.id }}</dt>
+    </dl>
+  </div>
+
+</div>
+

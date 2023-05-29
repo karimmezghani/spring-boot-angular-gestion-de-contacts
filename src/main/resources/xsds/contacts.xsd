@@ -1,0 +1,173 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.vpetrou.com/contact-ws"
+           targetNamespace="http://www.vpetrou.com/contact-ws" elementFormDefault="qualified">
+
+    <xs:simpleType name="cities">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="Sfax"/>
+            <xs:enumeration value="Tunis"/>
+            <xs:enumeration value="Sousse"/>
+            <xs:enumeration value="Gabes"/>
+            <xs:enumeration value="Nabel"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="genders">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="m"/>
+            <xs:enumeration value="f"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="isDisabled">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="true"/>
+            <xs:enumeration value="false"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:complexType name="contactInfo">
+        <xs:sequence>
+            <xs:element name="contactId" type="xs:long"/>
+            <xs:element name="name" type="xs:string"/>
+            <xs:element name="address" type="xs:string"/>
+            <!-- < Possible Values: Sfax or Tunis or Sousse or Gabes or Nabel > -->
+            <xs:element name="city" type="tns:cities">
+                <xs:annotation>
+                    <xs:documentation>
+                        Possible Values: Sfax or Tunis or Sousse or Gabes or Nabel
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="phone" type="xs:string"/>
+            <!-- < Email must be unique and must follow email's format E.g email@email.com > -->
+            <xs:element name="email">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:pattern value="[^@]+@[^\.]+\..+"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <!-- < Possible Values: m or f > -->
+            <xs:element name="gender" type="tns:genders"/>
+            <!-- < Possible Values: true or false > -->
+            <xs:element name="disabled" type="tns:isDisabled"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:element name="getContactByIdRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="contactId" type="xs:long"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="getContactByIdResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="contactInfo" type="tns:contactInfo"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="getContactByNameRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="name" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="getContactByNameResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="contactInfo" type="tns:contactInfo" maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="getAllContactsRequest">
+        <xs:complexType/>
+    </xs:element>
+    <xs:element name="getAllContactsResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="contactInfo" type="tns:contactInfo" maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:complexType name="serviceStatus">
+        <xs:sequence>
+            <xs:element name="statusCode" type="xs:string"/>
+            <xs:element name="message" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:element name="addContactRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="name" type="xs:string"/>
+                <xs:element name="address" type="xs:string"/>
+                <!-- < Possible Values: Sfax or Tunis or Sousse or Gabes or Nabel > -->
+                <xs:element name="city" type="tns:cities">
+                    <xs:annotation>
+                        <xs:documentation>
+                            Possible Values: Sfax or Tunis or Sousse or Gabes or Nabel
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element name="phone" type="xs:string"/>
+                <!-- < Email must be unique and must follow email's format E.g email@email.com > -->
+                <xs:element name="email">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                            <xs:pattern value="[^@]+@[^\.]+\..+"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
+                <!-- < Possible Values: m or f > -->
+                <xs:element name="gender" type="tns:genders"/>
+                <!-- < Possible Values: true or false > -->
+                <xs:element name="disabled" type="tns:isDisabled"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="addContactResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="serviceStatus" type="tns:serviceStatus"/>
+                <xs:element name="contactInfo" type="tns:contactInfo"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="updateContactRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="contactInfo" type="tns:contactInfo"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="updateContactResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="serviceStatus" type="tns:serviceStatus"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="deleteContactRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="contactId" type="xs:long"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="deleteContactResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="serviceStatus" type="tns:serviceStatus"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+</xs:schema>

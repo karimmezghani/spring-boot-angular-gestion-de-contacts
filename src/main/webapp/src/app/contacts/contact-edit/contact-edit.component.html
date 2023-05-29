@@ -1,0 +1,45 @@
+<div class="container">
+  <h3>Edit Contact</h3>
+  <div class="row">
+    <div class="col-md-6">
+      <form (ngSubmit)="updateContact(contact)" #contactForm="ngForm">
+        <div class="form-group">
+          <label for="name" style="font-size:14px">Name</label><span class="required-input" style="font-size:14px">*</span>
+          <input pInputText name="contactName" type="text" class="form-control" [(ngModel)]="contact.name" name="name" required>
+        </div>
+        <div class="form-group">
+          <label for="address" style="font-size:14px">Address</label>
+          <input pInputText name="contactAddress" type="text" class="form-control" [(ngModel)]="contact.address" name="address">
+        </div>
+        <div class="form-group">
+          <label for="city" style="font-size:14px">City</label><span class="required-input" style="font-size:14px">*</span>
+          <p-dropdown class="radio-inline" name="city" [options]="cities" [(ngModel)]="contact.city" (onChange)="onChangeCity($event)"></p-dropdown>
+        </div>
+        <div class="form-group">
+          <label for="phone" style="font-size:14px">Phone</label>
+          <input pInputText name="contactPhone" type="phone" class="form-control" [(ngModel)]="contact.phone" name="phone">
+        </div>
+        <div class="form-group">
+          <label for="email" style="font-size:14px">Email</label><span class="required-input" style="font-size:14px">*</span>
+          <input pInputText name="contactEmail" type="email" class="form-control" [(ngModel)]="contact.email" name="email" required>
+        </div>
+        <div class="form-group">
+          <p-radioButton class="radio-inline" name="gender" value="f" label="Female" [(ngModel)]="contact.gender"></p-radioButton>
+          <p-radioButton class="radio-inline" name="gender" value="m" label="Male" [(ngModel)]="contact.gender"></p-radioButton>
+        </div>
+        <div class="form-group">
+          <input *ngIf="contact.disabled == 'true'" class="radio-inline" type="checkbox" (change)="setStatus($event)" checked>
+          <input *ngIf="contact.disabled == 'false'" class="radio-inline" type="checkbox" (change)="setStatus($event)">
+          <label class="radio-inline" style="font-size:14px">Non Actif</label>
+        </div>
+        <div class="form-group">
+          <button type="submit" class="btn btn-success" [disabled]="!contactForm.form.valid">Update</button>
+          <a [routerLink]="['/contact-detail', contact.id]" class="btn btn-warning">Back</a>
+        </div>
+        <div class="form-group" [ngClass]="{ 'has-error': emailAlreadyExists}">
+          <div *ngIf="emailAlreadyExists" class="help-block" style="font-size:14px">Email already exists</div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
